@@ -12,4 +12,4 @@ https://expo.io/@sinnim7/lindo-timer
 
 ![loading](<./images/Lindo Timer App-2.jpg>)
 
-![weather](<./images/weather.Lindo Timer App-3.jpg>)
+![weather](<./images/Lindo Timer App-3.jpg>)
