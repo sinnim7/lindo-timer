@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Button from "../Button";
 
 // 초 -> 분 변환
@@ -41,37 +42,54 @@ class Timer extends Component {
     const {
       // Timer index에서 받아온 props임
       isPlaying,
+      isStopping,
+      isContinue,
       elapsedTime,
       timerDuration,
       startTimer,
+      stopTimer,
+      continueTimer,
       restartTimer,
       addSecond
     } = this.props;
     return (
-      <View style={styles.container}>
-        <StatusBar barStyle={"light-content"} />
-        <View style={styles.upper}>
-          <Text style={styles.time}>
-            {formatTime(timerDuration - elapsedTime)}
-          </Text>
+      <LinearGradient
+        colors={["#ff6e7f", "#bfe9ff"]}
+        style={{ alignItems: "center" }}
+      >
+        <View style={styles.container}>
+          <StatusBar barStyle={"light-content"} />
+          <View style={styles.upper}>
+            <Text style={styles.time}>
+              {formatTime(timerDuration - elapsedTime)}
+            </Text>
+          </View>
+          <View style={styles.lower}>
+            {!isPlaying && !isStopping && (
+              <Button startReset="play-circle" onPress={startTimer} />
+            )}
+            {!isStopping && isPlaying && (
+              <Button stopContinue="play-pause" onPress={stopTimer} />
+            )}
+            {isContinue && isStopping && (
+              <Button
+                stopContinue="play-circle-outline"
+                onPress={continueTimer}
+              />
+            )}
+            {isContinue && !isPlaying && (
+              <Button startReset="cancel" onPress={restartTimer} />
+            )}
+          </View>
         </View>
-        <View style={styles.lower}>
-          {!isPlaying && (
-            <Button iconName="play-circle-o" onPress={startTimer} />
-          )}
-          {isPlaying && (
-            <Button iconName="stop-circle-o" onPress={restartTimer} />
-          )}
-        </View>
-      </View>
+      </LinearGradient>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "red"
+    flex: 1
   },
   upper: {
     flex: 2,
@@ -81,7 +99,8 @@ const styles = StyleSheet.create({
   lower: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    paddingBottom: 50
   },
   time: {
     color: "white",

@@ -1,18 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { View, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function Button({ iconName, onPress }) {
+function Button({ startReset, onPress, stopContinue }) {
   return (
-    <TouchableOpacity onPressOut={onPress}>
-      <FontAwesome name={iconName} size={80} color="white" />
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPressOut={onPress}>
+        <MaterialCommunityIcons name={startReset} size={80} color="#fc6767" />
+        <MaterialCommunityIcons name={stopContinue} size={80} color="#6dd5ed" />
+      </TouchableOpacity>
+    </View>
   );
 }
 
 Button.prototypes = {
-  iconName: PropTypes.string.isRequired,
+  startReset: PropTypes.string.isRequired,
+  stopContinue: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired
 };
 

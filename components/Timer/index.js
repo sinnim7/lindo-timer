@@ -15,9 +15,17 @@ import { actionCreators as lindoActions } from "../../reducer";
 //presenter에서 왜 이런 props를 갖냐면
 //이는 인덱스에서 골랐기 때문. return {isPlaying,elapsedTime,timerDuration};
 function mapStateToProps(state) {
-  const { isPlaying, elapsedTime, timerDuration } = state;
+  const {
+    isPlaying,
+    isStopping,
+    isContinue,
+    elapsedTime,
+    timerDuration
+  } = state;
   return {
     isPlaying,
+    isStopping,
+    isContinue,
     elapsedTime,
     timerDuration
   };
@@ -27,6 +35,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     startTimer: bindActionCreators(lindoActions.startTimer, dispatch), //startTimer을 dispatch와 묶음.
+    stopTimer: bindActionCreators(lindoActions.stopTimer, dispatch),
+    continueTimer: bindActionCreators(lindoActions.continueTimer, dispatch),
     restartTimer: bindActionCreators(lindoActions.restartTimer, dispatch),
     addSecond: bindActionCreators(lindoActions.addSecond, dispatch)
   };
