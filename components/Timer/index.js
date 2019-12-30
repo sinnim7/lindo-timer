@@ -1,44 +1,36 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
-import Button from "../Button";
+import { connect } from "react-redux"; // 내 컴포넌트를 스토어에 연결하는 것을 도움.
+import { bindActionCreators } from "redux";
+import Timer from "./presenter";
+import { actionCreators as lindoActions } from "../../reducer";
 
-class Timer extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle={"light-content"} />
-        <View style={styles.upper}>
-          <Text style={styles.time}>24:00</Text>
-        </View>
-        <View style={styles.lower}>
-          <Button iconName="play-circle-o" onPress={() => alert("it works")} />
-          <Button iconName="stop-circle-o" onPress={() => alert("it works")} />
-        </View>
-      </View>
-    );
-  }
+//mapStateToProps는 컴포넌트(Timer)의 현재 state를 불러옴.
+//state는 provider store에서 불러옴.
+//<Provider store={store}><Timer /></Provider> 이 부분임.
+//provider는 자동으로 Timer의 state를 복사함.
+//store에 있는 state를 복사해 타이머에 붙여넣음.
+//그리고 function안에서 state를 열고 props를 리턴하는 거임.
+//그리고 mapStateToPropsfmf Timer와 연결함.
+//Timer는 props를 갖고 있는 프레젠테이션 컴포넌트임.
+//const { isPlaying, elapsedTime, timerDuration }
+//presenter에서 왜 이런 props를 갖냐면
+//이는 인덱스에서 골랐기 때문. return {isPlaying,elapsedTime,timerDuration};
+function mapStateToProps(state) {
+  const { isPlaying, elapsedTime, timerDuration } = state;
+  return {
+    isPlaying,
+    elapsedTime,
+    timerDuration
+  };
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "red"
-  },
-  upper: {
-    flex: 2,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  lower: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  time: {
-    color: "white",
-    fontSize: 120,
-    fontWeight: "100"
-  }
-});
+//디스패치는 액션을 리듀서로 보내는 function임.
+function mapDispatchToProps(dispatch) {
+  return {
+    startTimer: bindActionCreators(lindoActions.startTimer, dispatch), //startTimer을 dispatch와 묶음.
+    restartTimer: bindActionCreators(lindoActions.restartTimer, dispatch),
+    addSecond: bindActionCreators(lindoActions.addSecond, dispatch)
+  };
+}
 
-export default Timer;
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+// 타이머를 mapStateToProps, mapDispatchToProps 와 연결함.
