@@ -8,7 +8,7 @@ class Timer extends Component {
       <View style={styles.container}>
         <StatusBar barStyle={"light-content"} />
         <View style={styles.upper}>
-          <Text style={styles.time}>25:00</Text>
+          <Text style={styles.time}>24:00</Text>
         </View>
         <View style={styles.lower}>
           <Button iconName="play-circle-o" onPress={() => alert("it works")} />
